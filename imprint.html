@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imprint — Streaming Ventures</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=syne:400,600,700,800&family=space-grotesk:300,400,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #050508;
+      --purple: #7C3AED;
+      --text: #F5F5F7;
+      --text-muted: rgba(245, 245, 247, 0.45);
+      --text-dim: rgba(245, 245, 247, 0.22);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: -50%;
+      width: 200%; height: 200%;
+      z-index: 9998;
+      pointer-events: none;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      animation: grain-drift 9s steps(10) infinite;
+    }
+
+    @keyframes grain-drift {
+      0%   { transform: translate(0,0); }
+      10%  { transform: translate(-4%,-8%); }
+      20%  { transform: translate(7%,-3%); }
+      30%  { transform: translate(-5%,6%); }
+      40%  { transform: translate(9%,4%); }
+      50%  { transform: translate(-3%,10%); }
+      60%  { transform: translate(6%,-6%); }
+      70%  { transform: translate(-9%,3%); }
+      80%  { transform: translate(4%,-9%); }
+      90%  { transform: translate(-6%,-2%); }
+      100% { transform: translate(0,0); }
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 22px 40px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .nav-name {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      transition: color 0.2s ease;
+    }
+
+    .nav a:hover .nav-name { color: var(--text-muted); }
+
+    /* Page content */
+    .page {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 136px 24px 120px;
+      animation: page-in 0.7s var(--ease) 0.1s both;
+    }
+
+    @keyframes page-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      margin-bottom: 56px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--text-muted); }
+
+    h1 {
+      font-family: 'Syne', system-ui, sans-serif;
+      font-size: clamp(32px, 4.5vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 48px;
+    }
+
+    h2 {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 12px;
+      margin-top: 44px;
+    }
+
+    h2:first-of-type { margin-top: 0; }
+
+    p {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 14px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    a.inline {
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s ease;
+    }
+
+    a.inline:hover { color: var(--text); }
+
+    .divider {
+      width: 40px; height: 1px;
+      background: rgba(124, 58, 237, 0.35);
+      margin: 44px 0;
+    }
+
+    footer {
+      border-top: 1px solid var(--glass-border);
+      padding: 28px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.07em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 11px;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.07em;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover { color: var(--text-muted); }
+
+    a:focus-visible {
+      outline: 2px solid var(--purple);
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav { padding: 18px 24px; }
+      footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="nav">
+    <a href="index.html" aria-label="Back to Streaming Ventures homepage">
+      <span class="nav-name">Streaming Ventures</span>
+    </a>
+  </header>
+
+  <!-- Content -->
+  <main class="page">
+    <a class="back-link" href="index.html">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back
+    </a>
+
+    <h1>Imprint</h1>
+
+    <h2>Information according to § 5 TMG</h2>
+    <p>
+      Weschta &amp; von Hoch GbR<br>
+      Edlhardstra&szlig;e 10<br>
+      86637 Wertingen, Germany
+    </p>
+    <p>
+      Managing partners: Daniel Weschta &amp; Raphael von Hoch
+    </p>
+    <p>
+      Email: <a class="inline" href="mailto:info@streaming-ventures.com">info@streaming-ventures.com</a><br>
+      Phone: +49 151 21587348
+    </p>
+
+    <div class="divider"></div>
+
+    <h2>Liability for Contents</h2>
+    <p>
+      The contents of our pages have been created with the utmost care. However, we cannot guarantee the accuracy, completeness and timeliness of the content. As a service provider, we are responsible for our own content on these pages in accordance with § 7 Para. 1 TMG. Liability obligations relating to third-party information are only possible from the point in time at which a concrete infringement of the law becomes known.
+    </p>
+
+    <h2>Liability for Links</h2>
+    <p>
+      Our offer contains links to external websites of third parties, on whose contents we have no influence. The respective provider or operator of the linked pages is always responsible for their content. If we become aware of any legal infringements, we will remove such links immediately.
+    </p>
+
+    <h2>Copyright</h2>
+    <p>
+      The content and works on these pages are subject to German copyright law. Duplication, processing, distribution or any form of commercialisation beyond the scope of copyright law requires the prior written consent of the respective author. Downloads and copies of these pages are only permitted for private, non-commercial use.
+    </p>
+
+    <h2>Dispute Resolution</h2>
+    <p>
+      The European Commission provides a platform for online dispute resolution (ODR):
+      <a class="inline" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">https://ec.europa.eu/consumers/odr/</a>.
+      We are not obliged to participate in dispute resolution proceedings before a consumer arbitration board and do not generally do so.
+    </p>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <span class="footer-copy">&copy; 2024 Weschta &amp; von Hoch GbR</span>
+    <ul class="footer-links">
+      <li><a href="imprint.html" aria-current="page">Imprint</a></li>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+    </ul>
+  </footer>
+
+</body>
+</html>
