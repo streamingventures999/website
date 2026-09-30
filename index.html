@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Streaming Ventures</title>
-  <meta name="description" content="Streaming Ventures — Berlin · Est. 2024. Music that works best when you stop noticing it.">
+  <meta name="description" content="Streaming Ventures — Berlin · Est. 2023. Music that works best when you stop noticing it.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=syne:400,600,700,800&family=space-grotesk:300,400,500&display=swap" rel="stylesheet">
@@ -209,79 +209,98 @@
       50%      { opacity: 0.8; transform: scaleY(0.6); transform-origin: top; }
     }
 
-    /* ─── Stats ─────────────────────────────────── */
-    .stats {
-      padding: 60px 24px 120px;
-      max-width: 900px;
+    /* ─── Roster ────────────────────────────────── */
+    .roster {
+      padding: 60px 24px 140px;
+      max-width: 960px;
       margin: 0 auto;
     }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .stat-card {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      padding: 44px 28px;
-      text-align: center;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(40px) scale(0.94);
-      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease),
-                  border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
-    }
-
-    .stat-card.visible {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    .stat-card:nth-child(2) { transition-delay: 0.1s, 0.1s, 0s, 0s, 0s; }
-    .stat-card:nth-child(3) { transition-delay: 0.2s, 0.2s, 0s, 0s, 0s; }
-
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 20%; right: 20%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.55), transparent);
-    }
-
-    .stat-card:hover {
-      border-color: rgba(124, 58, 237, 0.28);
-      box-shadow: 0 0 40px rgba(124, 58, 237, 0.08);
-      background: rgba(255, 255, 255, 0.055);
-    }
-
-    .stat-num {
+    .roster-title, .about-title {
       font-family: 'Syne', system-ui, sans-serif;
-      font-size: clamp(40px, 5.5vw, 72px);
-      font-weight: 700;
-      letter-spacing: -0.03em;
+      font-size: clamp(22px, 2.6vw, 30px);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .roster-list { list-style: none; }
+
+    .roster-item { position: relative; }
+
+    .roster-rule {
+      position: absolute;
+      left: 0; right: 0;
+      height: 1px;
+      background: var(--glass-border);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 1.2s var(--ease);
+    }
+    .roster-rule.top    { top: 0; }
+    .roster-rule.bottom { bottom: 0; }
+
+    .roster-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 24px 4px 22px;
       color: var(--text);
+      text-decoration: none;
+    }
+
+    .roster-name {
+      display: inline-block;
+      font-family: 'Syne', system-ui, sans-serif;
+      font-size: clamp(28px, 4.6vw, 60px);
+      font-weight: 700;
       line-height: 1;
-      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease), color 0.4s ease;
     }
 
-    .stat-num .suffix {
-      font-size: 0.55em;
-      color: var(--purple);
-      font-weight: 300;
-    }
-
-    .stat-label {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
+    .roster-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      font-size: 12px;
+      letter-spacing: 0.04em;
       color: var(--text-dim);
+      opacity: 0;
+      transition: opacity 0.8s ease, color 0.3s ease;
+    }
+
+    .roster-cta svg { width: 16px; height: 16px; fill: currentColor; }
+
+    /* Reveal once the list scrolls into view */
+    .roster-list.visible .roster-rule { transform: scaleX(1); }
+    .roster-list.visible .roster-name { opacity: 1; transform: translateY(0); }
+    .roster-list.visible .roster-cta  { opacity: 1; }
+
+    .roster-rule, .roster-name, .roster-cta { transition-delay: calc(var(--i, 0) * 0.06s); }
+
+    /* Hover: the name picks up the hero's lavender and slides in */
+    .roster-list.visible .roster-link:hover .roster-name,
+    .roster-list.visible .roster-link:focus-visible .roster-name {
+      color: rgba(167, 139, 250, 0.88);
+      transform: translateX(14px);
+      transition-delay: 0s;
+    }
+
+    .roster-link:hover .roster-cta,
+    .roster-link:focus-visible .roster-cta { color: var(--text); transition-delay: 0s; }
+
+    .roster-link:focus-visible { outline-offset: -2px; }
+
+    @media (max-width: 600px) {
+      .roster { padding-bottom: 100px; }
+      .roster-link { padding: 18px 2px 16px; }
+      .roster-cta-text { display: none; }
     }
 
     /* ─── Founders ──────────────────────────────── */
@@ -289,6 +308,65 @@
       padding: 0 24px 120px;
       max-width: 960px;
       margin: 0 auto;
+    }
+
+    .about-text {
+      max-width: 34em;
+      margin-bottom: 48px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    }
+
+    .about-text.visible { opacity: 1; transform: translateY(0); }
+
+    .about-text p {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-muted);
+    }
+
+    .about-text p + p { margin-top: 1.1em; }
+
+    .about-text p:first-child { color: var(--text); }
+
+    .about-text p.about-legal {
+      margin-top: 1.6em;
+      font-size: 13px;
+      color: rgba(245, 245, 247, 0.35);
+      letter-spacing: 0.02em;
+    }
+
+    /* ─── Label badge ───────────────────────────── */
+    .founders-frame { position: relative; }
+
+    .label-badge {
+      position: absolute;
+      z-index: 2;
+      top: -76px;
+      right: -46px;
+      width: 172px;
+      height: 172px;
+      opacity: 0;
+      transform: rotate(-40deg) scale(0.8);
+      transition: opacity 0.8s var(--ease) 0.5s, transform 1.4s var(--ease) 0.5s;
+    }
+
+    .label-badge.visible { opacity: 1; transform: rotate(-12deg) scale(1); }
+
+    .badge-disc { fill: var(--bg); stroke: rgba(167, 139, 250, 0.55); stroke-width: 1.5; }
+    .badge-ring { fill: none; stroke: var(--glass-border); stroke-width: 1; }
+    .badge-dot  { fill: var(--purple); }
+    .badge-mark { stroke: var(--purple); }
+
+    .badge-text {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-size: 11.5px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      fill: var(--text-muted);
     }
 
     .founders-wrap {
@@ -380,7 +458,10 @@
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
       }
-      .stat-card, .founders-wrap { opacity: 1; transform: none; }
+      .founders-wrap, .about-text { opacity: 1; transform: none; }
+      .label-badge { opacity: 1; transform: rotate(-12deg); }
+      .roster-name, .roster-cta { opacity: 1; transform: none; }
+      .roster-rule { transform: none; }
     }
 
     /* ─── Responsive ────────────────────────────── */
@@ -390,9 +471,9 @@
     }
 
     @media (max-width: 600px) {
-      .stats-grid { grid-template-columns: 1fr; gap: 10px; }
-      .stat-card { padding: 28px 28px; }
       .founders-caption { bottom: 20px; left: 20px; }
+      .about-text p { font-size: 16px; }
+      .label-badge { width: 100px; height: 100px; top: -44px; right: -10px; }
     }
   </style>
 </head>
@@ -411,7 +492,7 @@
     <div class="blob blob-2" aria-hidden="true"></div>
     <div class="blob blob-3" aria-hidden="true"></div>
 
-    <p class="hero-eyebrow">Berlin &middot; Est. 2024</p>
+    <p class="hero-eyebrow">Berlin &middot; Est. 2023</p>
 
     <h1 class="hero-title" id="hero-title">
       Unseen,<br><span class="italic">but heard</span>
@@ -426,32 +507,115 @@
     </div>
   </section>
 
-  <!-- Stats -->
-  <section class="stats" aria-label="Key statistics">
-    <div class="stats-grid">
-      <div class="stat-card" role="figure" aria-label="200 million streams">
-        <div class="stat-num">
-          <span class="count" data-target="200">0</span><span class="suffix">M</span>
-        </div>
-        <div class="stat-label">Streams</div>
-      </div>
-      <div class="stat-card" role="figure" aria-label="640 releases">
-        <div class="stat-num">
-          <span class="count" data-target="640">0</span>
-        </div>
-        <div class="stat-label">Releases</div>
-      </div>
-      <div class="stat-card" role="figure" aria-label="176 countries">
-        <div class="stat-num">
-          <span class="count" data-target="176">0</span>
-        </div>
-        <div class="stat-label">Countries</div>
-      </div>
-    </div>
+  <!-- Roster -->
+  <section class="roster" aria-labelledby="roster-title">
+    <h2 class="roster-title" id="roster-title">Artists</h2>
+    <ul class="roster-list">
+      <li class="roster-item" style="--i: 0">
+        <span class="roster-rule top" aria-hidden="true"></span><a class="roster-link" href="https://open.spotify.com/artist/0lq1EMi4fjjCYEcjfJBzN1" target="_blank" rel="noopener" aria-label="Anders Valkvard on Spotify (opens in a new tab)">
+          <span class="roster-name">Anders Valkvard</span>
+          <span class="roster-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.48.66.3 1.02zm1.44-3.3c-.3.42-.84.6-1.26.3-3.24-1.98-8.16-2.58-11.94-1.38-.48.12-1.02-.12-1.14-.6-.12-.48.12-1.02.6-1.14 4.38-1.32 9.78-.66 13.5 1.62.36.18.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.3c-.6.18-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.72 1.02.42 1.56-.3.42-1.02.6-1.56.3z"/></svg><span class="roster-cta-text">Listen on Spotify</span></span>
+        </a>
+        <span class="roster-rule bottom" aria-hidden="true"></span>
+      </li>
+      <li class="roster-item" style="--i: 1">
+        <a class="roster-link" href="https://open.spotify.com/artist/2UIXBhB5h97ApAs48rTq7F" target="_blank" rel="noopener" aria-label="Aqua Scholar on Spotify (opens in a new tab)">
+          <span class="roster-name">Aqua Scholar</span>
+          <span class="roster-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.48.66.3 1.02zm1.44-3.3c-.3.42-.84.6-1.26.3-3.24-1.98-8.16-2.58-11.94-1.38-.48.12-1.02-.12-1.14-.6-.12-.48.12-1.02.6-1.14 4.38-1.32 9.78-.66 13.5 1.62.36.18.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.3c-.6.18-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.72 1.02.42 1.56-.3.42-1.02.6-1.56.3z"/></svg><span class="roster-cta-text">Listen on Spotify</span></span>
+        </a>
+        <span class="roster-rule bottom" aria-hidden="true"></span>
+      </li>
+      <li class="roster-item" style="--i: 2">
+        <a class="roster-link" href="https://open.spotify.com/artist/7guPdrzfeuTv56h7GxjZF0" target="_blank" rel="noopener" aria-label="Artsaurus on Spotify (opens in a new tab)">
+          <span class="roster-name">Artsaurus</span>
+          <span class="roster-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.48.66.3 1.02zm1.44-3.3c-.3.42-.84.6-1.26.3-3.24-1.98-8.16-2.58-11.94-1.38-.48.12-1.02-.12-1.14-.6-.12-.48.12-1.02.6-1.14 4.38-1.32 9.78-.66 13.5 1.62.36.18.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.3c-.6.18-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.72 1.02.42 1.56-.3.42-1.02.6-1.56.3z"/></svg><span class="roster-cta-text">Listen on Spotify</span></span>
+        </a>
+        <span class="roster-rule bottom" aria-hidden="true"></span>
+      </li>
+      <li class="roster-item" style="--i: 3">
+        <a class="roster-link" href="https://open.spotify.com/artist/5GkPupoxyFQbeCGlEkhT5C" target="_blank" rel="noopener" aria-label="Burstell on Spotify (opens in a new tab)">
+          <span class="roster-name">Burstell</span>
+          <span class="roster-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.48.66.3 1.02zm1.44-3.3c-.3.42-.84.6-1.26.3-3.24-1.98-8.16-2.58-11.94-1.38-.48.12-1.02-.12-1.14-.6-.12-.48.12-1.02.6-1.14 4.38-1.32 9.78-.66 13.5 1.62.36.18.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.3c-.6.18-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.72 1.02.42 1.56-.3.42-1.02.6-1.56.3z"/></svg><span class="roster-cta-text">Listen on Spotify</span></span>
+        </a>
+        <span class="roster-rule bottom" aria-hidden="true"></span>
+      </li>
+      <li class="roster-item" style="--i: 4">
+        <a class="roster-link" href="https://open.spotify.com/artist/1By9PeboTneR6Uh4glo7nE" target="_blank" rel="noopener" aria-label="Darkened Bliss on Spotify (opens in a new tab)">
+          <span class="roster-name">Darkened Bliss</span>
+          <span class="roster-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.48.66.3 1.02zm1.44-3.3c-.3.42-.84.6-1.26.3-3.24-1.98-8.16-2.58-11.94-1.38-.48.12-1.02-.12-1.14-.6-.12-.48.12-1.02.6-1.14 4.38-1.32 9.78-.66 13.5 1.62.36.18.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.3c-.6.18-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.72 1.02.42 1.56-.3.42-1.02.6-1.56.3z"/></svg><span class="roster-cta-text">Listen on Spotify</span></span>
+        </a>
+        <span class="roster-rule bottom" aria-hidden="true"></span>
+      </li>
+      <li class="roster-item" style="--i: 5">
+        <a class="roster-link" href="https://open.spotify.com/artist/5hdRHEc4zRA99JEx4vEgzL" target="_blank" rel="noopener" aria-label="Mey Andog on Spotify (opens in a new tab)">
+          <span class="roster-name">Mey Andog</span>
+          <span class="roster-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.48.66.3 1.02zm1.44-3.3c-.3.42-.84.6-1.26.3-3.24-1.98-8.16-2.58-11.94-1.38-.48.12-1.02-.12-1.14-.6-.12-.48.12-1.02.6-1.14 4.38-1.32 9.78-.66 13.5 1.62.36.18.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.3c-.6.18-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.72 1.02.42 1.56-.3.42-1.02.6-1.56.3z"/></svg><span class="roster-cta-text">Listen on Spotify</span></span>
+        </a>
+        <span class="roster-rule bottom" aria-hidden="true"></span>
+      </li>
+      <li class="roster-item" style="--i: 6">
+        <a class="roster-link" href="https://open.spotify.com/artist/42DQbGLMNeNbupqDMIe2J9" target="_blank" rel="noopener" aria-label="Moon Neux on Spotify (opens in a new tab)">
+          <span class="roster-name">Moon Neux</span>
+          <span class="roster-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.48.66.3 1.02zm1.44-3.3c-.3.42-.84.6-1.26.3-3.24-1.98-8.16-2.58-11.94-1.38-.48.12-1.02-.12-1.14-.6-.12-.48.12-1.02.6-1.14 4.38-1.32 9.78-.66 13.5 1.62.36.18.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.3c-.6.18-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.72 1.02.42 1.56-.3.42-1.02.6-1.56.3z"/></svg><span class="roster-cta-text">Listen on Spotify</span></span>
+        </a>
+        <span class="roster-rule bottom" aria-hidden="true"></span>
+      </li>
+      <li class="roster-item" style="--i: 7">
+        <a class="roster-link" href="https://open.spotify.com/artist/6A9Ea4TIDpSQOP5APKCiGT" target="_blank" rel="noopener" aria-label="Nahh Chill on Spotify (opens in a new tab)">
+          <span class="roster-name">Nahh Chill</span>
+          <span class="roster-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.48.66.3 1.02zm1.44-3.3c-.3.42-.84.6-1.26.3-3.24-1.98-8.16-2.58-11.94-1.38-.48.12-1.02-.12-1.14-.6-.12-.48.12-1.02.6-1.14 4.38-1.32 9.78-.66 13.5 1.62.36.18.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.3c-.6.18-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.72 1.02.42 1.56-.3.42-1.02.6-1.56.3z"/></svg><span class="roster-cta-text">Listen on Spotify</span></span>
+        </a>
+        <span class="roster-rule bottom" aria-hidden="true"></span>
+      </li>
+      <li class="roster-item" style="--i: 8">
+        <a class="roster-link" href="https://open.spotify.com/artist/65hkTdoGjTc2F7dkxJicho" target="_blank" rel="noopener" aria-label="Nuvia on Spotify (opens in a new tab)">
+          <span class="roster-name">Nuvia</span>
+          <span class="roster-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.48.66.3 1.02zm1.44-3.3c-.3.42-.84.6-1.26.3-3.24-1.98-8.16-2.58-11.94-1.38-.48.12-1.02-.12-1.14-.6-.12-.48.12-1.02.6-1.14 4.38-1.32 9.78-.66 13.5 1.62.36.18.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.3c-.6.18-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.72 1.02.42 1.56-.3.42-1.02.6-1.56.3z"/></svg><span class="roster-cta-text">Listen on Spotify</span></span>
+        </a>
+        <span class="roster-rule bottom" aria-hidden="true"></span>
+      </li>
+      <li class="roster-item" style="--i: 9">
+        <a class="roster-link" href="https://open.spotify.com/artist/2R3cdAtELIEPmC0L6AGzSk" target="_blank" rel="noopener" aria-label="Sonic Strokes on Spotify (opens in a new tab)">
+          <span class="roster-name">Sonic Strokes</span>
+          <span class="roster-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.48.66.3 1.02zm1.44-3.3c-.3.42-.84.6-1.26.3-3.24-1.98-8.16-2.58-11.94-1.38-.48.12-1.02-.12-1.14-.6-.12-.48.12-1.02.6-1.14 4.38-1.32 9.78-.66 13.5 1.62.36.18.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.3c-.6.18-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.72 1.02.42 1.56-.3.42-1.02.6-1.56.3z"/></svg><span class="roster-cta-text">Listen on Spotify</span></span>
+        </a>
+        <span class="roster-rule bottom" aria-hidden="true"></span>
+      </li>
+      <li class="roster-item" style="--i: 10">
+        <a class="roster-link" href="https://open.spotify.com/artist/0DovSSyc9QQDunduaGcWPG" target="_blank" rel="noopener" aria-label="Spherity on Spotify (opens in a new tab)">
+          <span class="roster-name">Spherity</span>
+          <span class="roster-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.48.66.3 1.02zm1.44-3.3c-.3.42-.84.6-1.26.3-3.24-1.98-8.16-2.58-11.94-1.38-.48.12-1.02-.12-1.14-.6-.12-.48.12-1.02.6-1.14 4.38-1.32 9.78-.66 13.5 1.62.36.18.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.3c-.6.18-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.72 1.02.42 1.56-.3.42-1.02.6-1.56.3z"/></svg><span class="roster-cta-text">Listen on Spotify</span></span>
+        </a>
+        <span class="roster-rule bottom" aria-hidden="true"></span>
+      </li>
+    </ul>
   </section>
 
   <!-- Founders -->
-  <section class="founders" aria-label="Our founders">
+  <section class="founders" aria-labelledby="about-title">
+    <h2 class="about-title" id="about-title">About us</h2>
+    <div class="about-text">
+      <p>Before Streaming Ventures was a label, it was two friends making music together.</p>
+      <p>Daniel and Raphael spent years producing tracks side by side, mostly for the joy of it. Slowly the songs piled up, and we noticed people were using them the way we did: to focus, to slow down, to get through the long hours.</p>
+      <p>In 2023 we turned that into Streaming Ventures, a small independent label in Berlin for music that does its work quietly in the background.</p>
+      <p>We didn&rsquo;t do it alone. Our producer Franco worked with us on production, and a lot of what you hear carries his touch. We still make the music ourselves, and we still make it together.</p>
+      <p class="about-legal">Streaming Ventures is a label of Weschta &amp; von Hoch GbR.</p>
+    </div>
+    <div class="founders-frame">
+      <svg class="label-badge" viewBox="0 0 200 200" role="img" aria-label="Streaming Ventures, independent music label, Berlin, established 2023">
+          <defs>
+            <path id="badgeTop" d="M 22,100 A 78,78 0 0,1 178,100"/>
+            <path id="badgeBottom" d="M 13,100 A 87,87 0 0,0 187,100"/>
+          </defs>
+          <circle cx="100" cy="100" r="97" class="badge-disc"/>
+          <circle cx="100" cy="100" r="91" class="badge-ring"/>
+          <circle cx="100" cy="100" r="66" class="badge-ring"/>
+          <text class="badge-text"><textPath href="#badgeTop" startOffset="50%" text-anchor="middle">Independent music label</textPath></text>
+          <text class="badge-text"><textPath href="#badgeBottom" startOffset="50%" text-anchor="middle">Berlin &#183; Est. 2023</textPath></text>
+          <circle cx="16" cy="100" r="2.2" class="badge-dot"/>
+          <circle cx="184" cy="100" r="2.2" class="badge-dot"/>
+          <g class="badge-mark" stroke-linecap="round"><line x1="84.6" y1="95.7" x2="115.4" y2="65.9" stroke-width="9.6"/><line x1="90.9" y1="109.6" x2="109.1" y2="92.3" stroke-width="5.3"/><line x1="84.6" y1="134.1" x2="115.4" y2="104.8" stroke-width="9.6"/></g>
+        </svg>
     <div class="founders-wrap" id="foundersWrap">
       <img
         src="founders.jpg"
@@ -464,11 +628,12 @@
         <p class="founders-names">Daniel Weschta &amp; Raphael von Hoch</p>
       </div>
     </div>
+    </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <span class="footer-copy">&copy; 2024 Streaming Ventures</span>
+    <span class="footer-copy">&copy; 2023&ndash;<span class="js-year">2026</span> Weschta &amp; von Hoch GbR</span>
     <ul class="footer-links">
       <li><a href="imprint.html">Imprint</a></li>
       <li><a href="privacy.html">Privacy Policy</a></li>
@@ -486,28 +651,9 @@
       });
     }, { threshold: 0.15 });
 
-    document.querySelectorAll('.stat-card, .founders-wrap').forEach(el => observer.observe(el));
+    document.querySelectorAll('.roster-list, .about-text, .founders-wrap, .label-badge').forEach(el => observer.observe(el));
 
-    // Counter animation (triggers once when stat cards become visible)
-    let counted = false;
-    const countObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && !counted) {
-        counted = true;
-        document.querySelectorAll('.count').forEach(el => {
-          const target = +el.dataset.target;
-          const dur = 2000;
-          const t0 = performance.now();
-          const tick = now => {
-            const p = Math.min((now - t0) / dur, 1);
-            el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target);
-            if (p < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-        });
-      }
-    }, { threshold: 0.3 });
-
-    countObserver.observe(document.querySelector('.stats-grid'));
   </script>
+<script>document.querySelectorAll(".js-year").forEach(el => el.textContent = new Date().getFullYear());</script>
 </body>
 </html>
