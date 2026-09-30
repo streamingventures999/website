@@ -216,7 +216,7 @@
       margin: 0 auto;
     }
 
-    .roster-title, .about-title {
+    .roster-title, .about-title, .contact-title {
       font-family: 'Syne', system-ui, sans-serif;
       font-size: clamp(22px, 2.6vw, 30px);
       font-weight: 600;
@@ -412,6 +412,46 @@
       letter-spacing: 0.05em;
     }
 
+    /* ─── Contact ───────────────────────────────── */
+    .contact {
+      padding: 0 24px 140px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .contact-body {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    }
+
+    .contact-body.visible { opacity: 1; transform: translateY(0); }
+
+    .contact-name {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .contact-mail {
+      display: inline-block;
+      font-family: 'Syne', system-ui, sans-serif;
+      font-size: clamp(18px, 3.4vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+      text-decoration: none;
+      overflow-wrap: anywhere;
+      transition: color 0.4s ease;
+    }
+
+    @media (min-width: 700px) { .contact-mail { white-space: nowrap; } }
+
+    .contact-mail:hover,
+    .contact-mail:focus-visible { color: rgba(167, 139, 250, 0.88); }
+
     /* ─── Footer ────────────────────────────────── */
     footer {
       border-top: 1px solid var(--glass-border);
@@ -458,7 +498,7 @@
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
       }
-      .founders-wrap, .about-text { opacity: 1; transform: none; }
+      .founders-wrap, .about-text, .contact-body { opacity: 1; transform: none; }
       .label-badge { opacity: 1; transform: rotate(-12deg); }
       .roster-name, .roster-cta { opacity: 1; transform: none; }
       .roster-rule { transform: none; }
@@ -631,6 +671,15 @@
     </div>
   </section>
 
+  <!-- Contact -->
+  <section class="contact" aria-labelledby="contact-title">
+    <h2 class="contact-title" id="contact-title">Contact</h2>
+    <div class="contact-body">
+      <p class="contact-name">Raphael von Hoch</p>
+      <a class="contact-mail" href="mailto:raphael@streaming-ventures.com">raphael@streaming-ventures.com</a>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer>
     <span class="footer-copy">&copy; 2023&ndash;<span class="js-year">2026</span> Weschta &amp; von Hoch GbR</span>
@@ -651,7 +700,7 @@
       });
     }, { threshold: 0.15 });
 
-    document.querySelectorAll('.roster-list, .about-text, .founders-wrap, .label-badge').forEach(el => observer.observe(el));
+    document.querySelectorAll('.roster-list, .about-text, .founders-wrap, .label-badge, .contact-body').forEach(el => observer.observe(el));
 
   </script>
 <script>document.querySelectorAll(".js-year").forEach(el => el.textContent = new Date().getFullYear());</script>
